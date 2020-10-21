@@ -26,6 +26,13 @@ func TestURIReferenceFormatCheckerIsFormat(t *testing.T) {
 	assert.True(t, checker.IsFormat("https://dummyhost.com/dummy-path?dummy-qp-name=dummy-qp-value"))
 }
 
+func TestURIFormatCheckerIsFormat(t *testing.T) {
+	checker := URIFormatChecker{}
+	assert.False(t, checker.IsFormat("https://dummyhost.com/dummy-path?dummy-qp- name=dummy-qp-value"))
+	assert.False(t, checker.IsFormat("https://dummyhost.com/dummy-path?dummy-qp- name=dummy-qp-value "))
+	assert.True(t, checker.IsFormat("https://dummyhost.com/dummy-path?dummy-qp-name=dummy-qp-value"))
+}
+
 const formatSchema = `{
 	"type": "object",
 	"properties": {

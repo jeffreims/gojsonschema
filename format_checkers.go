@@ -8,6 +8,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/asaskevich/govalidator"
 )
 
 type (
@@ -278,6 +280,10 @@ func (f URIFormatChecker) IsFormat(input interface{}) bool {
 		return true
 	}
 
+	if isValid := govalidator.IsURL(asString); !isValid {
+		return false
+	}
+
 	u, err := url.Parse(asString)
 
 	if err != nil || u.Scheme == "" {
@@ -304,7 +310,6 @@ func (f URITemplateFormatChecker) IsFormat(input interface{}) bool {
 	if !ok {
 		return true
 	}
-
 	u, err := url.Parse(asString)
 	if err != nil || strings.Contains(asString, `\`) {
 		return false
